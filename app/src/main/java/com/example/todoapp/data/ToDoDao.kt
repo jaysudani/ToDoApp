@@ -1,10 +1,8 @@
 package com.example.todoapp.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import com.example.todoapp.data.models.ToDoData
 
 @Dao
 interface ToDoDao {
@@ -14,4 +12,13 @@ interface ToDoDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertData(toDoData: ToDoData)
+
+    @Update
+    suspend fun updateData(toDoData: ToDoData)
+
+    @Delete
+    suspend fun deleteItem(toDoData: ToDoData)
+
+    @Query("DELETE FROM todo_table")
+    suspend fun deleteAll()
 }
