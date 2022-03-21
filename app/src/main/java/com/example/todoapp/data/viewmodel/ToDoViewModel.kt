@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.todoapp.data.ToDoDao
 import com.example.todoapp.data.ToDoDatabase
 import com.example.todoapp.data.models.ToDoData
 import com.example.todoapp.data.repository.ToDoRepository
@@ -15,8 +16,10 @@ class ToDoViewModel(application: Application) : AndroidViewModel(application) {
     private val toDoDao = ToDoDatabase.getDatabase(application).toDoDao()
     private val repository : ToDoRepository = ToDoRepository(toDoDao)
     val getAllData : LiveData<List<ToDoData>> = repository.getAllData
+    val sortByHighPriority : LiveData<List<ToDoData>> = repository.sortByHighPriority
+    val sortByLowPriority : LiveData<List<ToDoData>> = repository.sortByLowPriority
 
-    fun insertDate(toDoData: ToDoData){
+    fun insertData(toDoData: ToDoData){
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertData(toDoData)
         }
@@ -37,5 +40,11 @@ class ToDoViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO){
             repository.deleteAll()
         }
+    }
+
+    fun searchDatabase(searchQuery: String) : LiveData<List<ToDoData>>{
+
+        return repository.searchDatabase(searchQuery)
+
     }
 }

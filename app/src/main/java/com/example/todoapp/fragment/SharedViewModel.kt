@@ -14,7 +14,7 @@ import com.example.todoapp.data.models.ToDoData
 
 class SharedViewModel(application : Application) : AndroidViewModel(application) {
 
-    val emptyDatabase : MutableLiveData<Boolean> = MutableLiveData(true)
+    val emptyDatabase : MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun checkIfDatabaseEmpty(toDoData: List<ToDoData>){
         emptyDatabase.value=toDoData.isEmpty()
@@ -67,12 +67,6 @@ class SharedViewModel(application : Application) : AndroidViewModel(application)
 
         }
     }
-    fun parsePriorityToInt(priority: Priority) : Int{
-        return when(priority){
-            Priority.LOW -> 2
-            Priority.MEDIUM -> 1
-            Priority.HIGH -> 0
-        }
-    }
+
 
 }

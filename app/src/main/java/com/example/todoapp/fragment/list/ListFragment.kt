@@ -3,30 +3,33 @@ package com.example.todoapp.fragment.list
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.*
 import com.example.todoapp.R
+import com.example.todoapp.data.models.ToDoData
 import com.example.todoapp.data.viewmodel.ToDoViewModel
 import com.example.todoapp.databinding.FragmentListBinding
 import com.example.todoapp.fragment.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_list.view.*
+import com.example.todoapp.fragment.list.adapter.ListAdapter
+import com.google.android.material.snackbar.Snackbar
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(),SearchView.OnQueryTextListener {
     private val mToDoViewModel : ToDoViewModel by viewModels()
     private val mSharedViewModel : SharedViewModel by viewModels()
-    private val adapter : ListAdapter  by lazy { ListAdapter() }
+    private val adapter : ListAdapter by lazy { ListAdapter() }
     private var _binding : FragmentListBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
 
         _binding = FragmentListBinding.inflate(inflater,container,false)
@@ -54,15 +57,82 @@ class ListFragment : Fragment() {
     private fun setupRecyclerview() {
         val recyclerView = binding.recyclerView
         recyclerView.adapter= adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.itemAnimator= SlideInUpAnimator().apply {
+            addDuration=300
+        }
+        swipeToDelete(recyclerView)
+    }
+
+    private fun swipeToDelete(recyclerView: RecyclerView){
+        val swipeToDeleteCallback = object : SwipeToDelete(){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val deletedItem = adapter.dataList[viewHolder.adapterPosition]
+
+                //Delete Item
+                mToDoViewModel.deleteData(deletedItem)
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                //Toast.makeText(requireContext(),"Successfully deleted '${deletedItem.title}' ",Toast.LENGTH_LONG).show()
+
+                //Restore Deleted Item
+                restoreDeletedData(viewHolder.itemView,deletedItem,viewHolder.adapterPosition)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
+    private fun restoreDeletedData(view : View, deletedItem: ToDoData, position : Int){
+        val snackBar = Snackbar.make(
+            view,"Deleted '${deletedItem.title}' ",
+            Snackbar.LENGTH_LONG
+        )
+        snackBar.setAction("Undo"){
+            mToDoViewModel.insertData(deletedItem)
+        }
+        snackBar.show()
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId==R.id.menu_delete_all){
-            confirmRemoval()
+        when(item.itemId){
+            R.id.menu_delete_all -> confirmRemoval()
+            R.id.menu_priority_high -> mToDoViewModel.sortByHighPriority.observe(this, Observer {
+                adapter.setData(it)
+            })
+            R.id.menu_priority_low -> mToDoViewModel.sortByLowPriority.observe(this, Observer {
+                adapter.setData(it)
+            })
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onQueryTextChange(query : String?): Boolean {
+        if(query!=null){
+            searchThroughDatabase(query)
+        }
+        return true
+    }
+
+
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if(query!=null){
+            searchThroughDatabase(query)
+        }
+        return true
+    }
+
+    private fun searchThroughDatabase(query: String) {
+        var searchQuery = query
+        searchQuery = "%$searchQuery%"
+        mToDoViewModel.searchDatabase(searchQuery).observe(this, Observer { list->
+            list?.let {
+                adapter.setData(list)
+            }
+        } )
+    }
+
     //Show alert Dialog to confirm removal of all Item
     private fun confirmRemoval() {
         val builder = AlertDialog.Builder(requireContext())
@@ -82,7 +152,14 @@ class ListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.list_fragment_menu,menu)
+
+        val search =  menu.findItem(R.id.search)
+        val searchView = search.actionView as? SearchView
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(this)
     }
+
+
 
 
 }
