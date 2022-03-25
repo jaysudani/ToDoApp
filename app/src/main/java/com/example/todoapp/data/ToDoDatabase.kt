@@ -22,13 +22,13 @@ abstract class ToDoDatabase : RoomDatabase() {
             }
 
             synchronized(this){
-                val instace = Room.databaseBuilder(
+                val instance = Room.databaseBuilder(
                     context.applicationContext,
                     ToDoDatabase::class.java,
                     "todo_database"
                 ).build()
-                INSTANCE=instace
-                return instace
+                INSTANCE=instance
+                return instance
             }
         }
     }

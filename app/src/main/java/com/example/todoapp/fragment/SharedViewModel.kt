@@ -1,7 +1,6 @@
 package com.example.todoapp.fragment
 
 import android.app.Application
-import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
@@ -20,7 +19,7 @@ class SharedViewModel(application : Application) : AndroidViewModel(application)
         emptyDatabase.value=toDoData.isEmpty()
     }
     //Adapter for color changing in different priority
-    val listner : AdapterView.OnItemSelectedListener = object :
+    val listener : AdapterView.OnItemSelectedListener = object :
         AdapterView.OnItemSelectedListener{
         override fun onItemSelected(
             parent : AdapterView<*>?,
@@ -48,9 +47,7 @@ class SharedViewModel(application : Application) : AndroidViewModel(application)
     //For checking about inserting data
     fun verifyDataFromUser(title : String, description : String) : Boolean{
 
-        return if(TextUtils.isEmpty(title) || TextUtils.isEmpty(description)){
-            false
-        }else !(title.isEmpty() || description.isEmpty())
+        return !(title.isEmpty() or description.isEmpty())
 
     }
 

@@ -13,8 +13,6 @@ import com.example.todoapp.data.models.ToDoData
 import com.example.todoapp.data.viewmodel.ToDoViewModel
 import com.example.todoapp.databinding.FragmentUpdateBinding
 import com.example.todoapp.fragment.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_update.*
-import kotlinx.android.synthetic.main.fragment_update.view.*
 
 class UpdateFragment : Fragment() {
     private val args by navArgs<UpdateFragmentArgs>()
@@ -25,7 +23,7 @@ class UpdateFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         // Data binding
         _binding= FragmentUpdateBinding.inflate(inflater,container,false)
@@ -34,7 +32,7 @@ class UpdateFragment : Fragment() {
         setHasOptionsMenu(true)
 
         //Spinner Item Selected Listener
-        binding.currentPrioritiesSpinner.onItemSelectedListener = mSharedViewModel.listner
+        binding.currentPrioritiesSpinner.onItemSelectedListener = mSharedViewModel.listener
 
 
         return binding.root
@@ -55,9 +53,9 @@ class UpdateFragment : Fragment() {
     }
 
     private fun updateItem() {
-        val title = current_title_et.text.toString()
-        val description = current_description_et.text.toString()
-        val getPriority = current_priorities_spinner.selectedItem.toString()
+        val title = binding.currentTitleEt.text.toString()
+        val description = binding.currentDescriptionEt.text.toString()
+        val getPriority = binding.currentPrioritiesSpinner.selectedItem.toString()
 
         val validation = mSharedViewModel.verifyDataFromUser(title,description)
         if(validation){

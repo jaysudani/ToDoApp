@@ -7,7 +7,6 @@ import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.*
 import com.example.todoapp.R
 import com.example.todoapp.data.models.ToDoData
@@ -39,10 +38,10 @@ class ListFragment : Fragment(),SearchView.OnQueryTextListener {
         //Set up Recyclerview
         setupRecyclerview()
 
-        mToDoViewModel.getAllData.observe(viewLifecycleOwner, Observer {data ->
+        mToDoViewModel.getAllData.observe(viewLifecycleOwner) { data ->
             mSharedViewModel.checkIfDatabaseEmpty(data)
             adapter.setData(data)
-        })
+        }
 
 
         setHasOptionsMenu(true)
@@ -97,12 +96,12 @@ class ListFragment : Fragment(),SearchView.OnQueryTextListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.menu_delete_all -> confirmRemoval()
-            R.id.menu_priority_high -> mToDoViewModel.sortByHighPriority.observe(this, Observer {
+            R.id.menu_priority_high -> mToDoViewModel.sortByHighPriority.observe(this) {
                 adapter.setData(it)
-            })
-            R.id.menu_priority_low -> mToDoViewModel.sortByLowPriority.observe(this, Observer {
+            }
+            R.id.menu_priority_low -> mToDoViewModel.sortByLowPriority.observe(this) {
                 adapter.setData(it)
-            })
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -124,13 +123,12 @@ class ListFragment : Fragment(),SearchView.OnQueryTextListener {
     }
 
     private fun searchThroughDatabase(query: String) {
-        var searchQuery = query
-        searchQuery = "%$searchQuery%"
-        mToDoViewModel.searchDatabase(searchQuery).observe(this, Observer { list->
+        val searchQuery = "%$query%"
+        mToDoViewModel.searchDatabase(searchQuery).observe(this) { list ->
             list?.let {
                 adapter.setData(list)
             }
-        } )
+        }
     }
 
     //Show alert Dialog to confirm removal of all Item
