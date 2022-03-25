@@ -31,7 +31,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:entries="@array/Priorities"
-        android:background="@color/white"
+        android:background="@drawable/custom_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

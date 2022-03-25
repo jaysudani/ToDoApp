@@ -3,7 +3,9 @@ package com.example.todoapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 
 class MainActivity : AppCompatActivity() {
@@ -14,8 +16,14 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController=navHostFragment.navController
+        val appBarConfiguration = AppBarConfiguration
+            .Builder(
+                R.id.splashScreen,
+                R.id.listFragment
+            )
+            .build()
 
-        setupActionBarWithNavController(navController)
+        setupActionBarWithNavController(navController,appBarConfiguration)
     }
 
     override fun onSupportNavigateUp(): Boolean {

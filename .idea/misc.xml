@@ -5,12 +5,19 @@
       <map>
         <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/drawable/custom_input.xml" value="0.2225" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/drawable/ic_add.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/drawable/ic_baseline_check_circle_24.xml" value="0.225" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/drawable/ic_check.xml" value="0.225" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/drawable/ic_no_data1.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/drawable/ic_splash_screen.xml" value="0.1235" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/drawable/ic_splashscreen.xml" value="0.1235" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/drawable/item_background.xml" value="0.2555" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/drawable/todoapp_logo.xml" value="0.1235" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/layout/activity_main.xml" value="0.1449814126394052" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/layout/fragment_add.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/layout/fragment_add.xml" value="0.1" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/layout/fragment_list.xml" value="0.16" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/layout/fragment_splash_screen.xml" value="0.1" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/layout/fragment_update.xml" value="0.16" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/layout/layout_splash.xml" value="0.14310109289617487" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/layout/row_layout.xml" value="0.1" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/menu/add_fragment_menu.xml" value="0.15789473684210525" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/ToDoApp/app/src/main/res/menu/list_fragment_menu.xml" value="0.15789473684210525" />
