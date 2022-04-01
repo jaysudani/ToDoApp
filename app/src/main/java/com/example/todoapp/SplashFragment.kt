@@ -24,7 +24,7 @@ class SplashFragment : Fragment() {
 //        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(R.id.action_splashScreen_to_listFragment)
-        },3000)
+        },1100)
 
 
 
@@ -41,6 +41,7 @@ class SplashFragment : Fragment() {
         super.onStop()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
+
 
 
 }
