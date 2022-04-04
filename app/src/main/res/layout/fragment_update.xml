@@ -6,7 +6,7 @@
     <data>
         <variable
             name="args"
-            type="com.example.todoapp.fragment.update.UpdateFragmentArgs" />
+            type="com.elitedevelopers.todoapp.fragment.update.UpdateFragmentArgs" />
 
     </data>
 
